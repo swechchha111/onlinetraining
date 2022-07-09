@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        if(nums.size()==0)
+            return 0;
+        set<int> mpp;
+        for(auto it: nums)
+        {
+            mpp.insert(it);
+            
+        }
+        int maxa=1;
+        for(auto it: nums)
+        {
+            if(!mpp.count(it-1))
+            {
+                int curr=it;
+                int count=1;
+                while(mpp.count(curr+1))
+                { count++;
+                 curr=curr+1;
+                    
+                }
+                maxa=max(maxa, count);
+            }
+        }
+        return maxa;
+    }
+};
