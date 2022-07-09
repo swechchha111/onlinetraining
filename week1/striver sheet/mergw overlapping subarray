@@ -1,0 +1,22 @@
+class Solution {
+public:
+    static bool comp(vector<int> a,vector<int> b)
+    { return a[0]<b[0];}
+    vector<vector<int>> merge(vector<vector<int>>& i) {
+        sort(i.begin(), i.end(),comp);
+        vector<vector<int>> ans;
+        ans.push_back(i[0]);
+        int end=i[0][1];
+        for(int j=1;j<i.size();j++)
+        {if(i[j][0]<=end)
+        {ans[ans.size()-1][1]=max(i[j][1],ans[ans.size()-1][1]);
+         end=max(i[j][1],ans[ans.size()-1][1]);
+        }
+         else
+         {
+             ans.push_back(i[j]);
+             end=i[j][1];
+         }}
+        return ans;
+    }
+};
