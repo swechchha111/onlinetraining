@@ -1,0 +1,88 @@
+
+class LRUCache {
+public:
+    class Node{
+        public:
+        int key;
+        int val;
+        Node* next;
+        Node* prev;
+        Node(int k, int v)
+        {  key=k;
+        val=v;
+         next=NULL;
+         prev=NULL;
+            
+        }
+    };
+    unordered_map<int, Node*> mpp;
+    Node* head=new Node(-1, -1);
+     Node* tail=new Node(-1, -1);
+    int cap;
+    
+    LRUCache(int capacity) {
+        cap=capacity;
+        head->next=tail;
+        tail->prev=head;
+        
+        
+    }
+   void deletee(Node* node)
+    {
+       Node *pre=node->prev;
+     Node *post=node->next;
+     pre->next=post;
+     post->prev=pre;
+        
+    }
+    void add(Node* node)
+    {cout<<"y";
+        Node* l=head->next;
+        head->next=node;
+        node->prev=head;
+        node->next=l;
+        l->prev=node;
+    //  Node * temp = head -> next;
+    // newnode -> next = temp;
+    // newnode -> prev = head;
+    // head -> next = newnode;
+    // temp -> prev = newnode;
+    }
+    
+    int get(int key) {
+
+        if(mpp.find(key)==mpp.end())
+        {return -1;
+            
+        }
+        else
+        {Node* u=mpp[key];
+         
+            deletee(mpp[key]);
+            add(u );
+         mpp[key]=u;
+            
+        }
+        return mpp[key]->val;
+        
+    }
+    
+    
+    void put(int key, int value) {
+    
+    
+        if(mpp.find(key)!=mpp.end())
+        {  Node* u=mpp[key];
+         mpp.erase(key);
+            deletee(u);
+            
+        }
+         if(mpp.size()==cap)
+        {mpp.erase(tail->prev->key);
+         deletee(tail->prev);
+            
+        }
+        add(new Node(key, value));
+        mpp[key]=head->next;
+    }
+};
